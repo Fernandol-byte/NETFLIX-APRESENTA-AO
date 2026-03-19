@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Desigualdade de Genero - Netflix</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Helvetica Neue',Arial,sans-serif;background:#141414;color:#fff;overflow:hidden;height:100vh}
+.slide{background:#141414;color:#fff;height:100vh;width:100vw;display:none;padding:48px 60px;position:relative;overflow:hidden;flex-direction:column;justify-content:center;align-items:center}
+.slide.active{display:flex}
+.nf-logo{color:#E50914;font-size:32px;font-weight:900;letter-spacing:-1px}
+.nf-red{color:#E50914}
+.nf-btn{background:#E50914;color:#fff;border:none;padding:13px 28px;border-radius:4px;font-size:15px;font-weight:600;cursor:pointer;font-family:inherit}
+.nf-btn:hover{background:#b20710}
+.nf-btn-sec{background:rgba(109,109,110,0.7);color:#fff;border:none;padding:13px 28px;border-radius:4px;font-size:15px;cursor:pointer;font-family:inherit;margin-left:12px}
+.progress{position:absolute;top:0;left:0;width:100%;height:3px;background:#333}
+.progress-fill{height:3px;background:#E50914;transition:width .4s ease}
+.nav{position:absolute;bottom:0;left:0;right:0;background:#0d0d0d;padding:14px 24px;display:flex;justify-content:space-between;align-items:center}
+.nav-btn{background:rgba(109,109,110,0.7);color:#fff;border:none;padding:10px 20px;border-radius:4px;font-size:13px;cursor:pointer;font-family:inherit}
+.nav-btn:hover{background:rgba(109,109,110,1)}
+.nav-btn:disabled{opacity:.3;cursor:default}
+.dots{display:flex;gap:5px}
+.dot{width:6px;height:6px;border-radius:50%;background:#555;cursor:pointer;transition:all .2s}
+.dot.active{background:#E50914;width:8px;height:8px}
+.profiles{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;margin:28px 0}
+.profile-card{display:flex;flex-direction:column;align-items:center;gap:10px;cursor:pointer;padding:12px;border-radius:4px;transition:all .2s}
+.profile-card:hover .avatar{border:3px solid #fff}
+.avatar{width:88px;height:88px;border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:36px;font-weight:700;border:3px solid transparent;transition:border .2s}
+.profile-name{font-size:14px;color:#e5e5e5}
+.loading-n{font-size:80px;font-weight:900;color:#E50914;font-family:'Georgia',serif}
+.load-track{width:260px;height:4px;background:#333;border-radius:2px}
+.load-fill{height:4px;background:#E50914;border-radius:2px;animation:lf 1.5s ease forwards}
+@keyframes lf{from{width:0}to{width:100%}}
+.cat-header{display:flex;gap:28px;margin-bottom:20px;font-size:14px;color:#e5e5e5}
+.cat-header span{cursor:pointer;opacity:.7;padding-bottom:4px}
+.cat-header span:first-child{opacity:1;border-bottom:2px solid #E50914}
+.row-title{font-size:13px;font-weight:500;color:#e5e5e5;margin-bottom:10px;letter-spacing:.5px}
+.card-row{display:flex;gap:10px;margin-bottom:18px}
+.card{min-width:120px;height:72px;border-radius:4px;display:flex;align-items:flex-end;padding:7px 9px;cursor:pointer;transition:transform .2s;position:relative;overflow:hidden;flex-shrink:0}
+.card:hover{transform:scale(1.06)}
+.card-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.9) 0%,rgba(0,0,0,0) 60%)}
+.card-title{font-size:10px;font-weight:600;z-index:1;line-height:1.2}
+.featured{min-width:210px;height:112px;border:2px solid #E50914}
+.ep-badge{background:#E50914;color:#fff;font-size:11px;padding:3px 10px;border-radius:2px;letter-spacing:1px;font-weight:600;display:inline-block;margin-bottom:6px}
+.ep-cat{font-size:12px;color:#aaa;margin-left:8px}
+.doc-title{font-size:30px;font-weight:700;line-height:1.2;width:100%;margin:6px 0}
+.doc-sub{font-size:14px;color:#aaa;margin-bottom:22px;width:100%}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px;width:100%}
+.card-dark{background:#1f1f1f;border-radius:4px;padding:16px}
+.card-dark h4{font-size:10px;color:#E50914;margin-bottom:8px;letter-spacing:.5px;text-transform:uppercase}
+.card-dark p,.card-dark li{font-size:12px;color:#ccc;line-height:1.6}
+.card-dark ul{padding-left:14px}
+.full{grid-column:1/-1}
+.stat{background:#1f1f1f;border-left:3px solid #E50914;padding:12px 16px;margin-bottom:10px;border-radius:0 4px 4px 0}
+.stat-n{font-size:30px;font-weight:700;color:#E50914}
+.stat-l{font-size:12px;color:#aaa}
+.tl{display:flex;gap:14px;margin-bottom:12px;align-items:flex-start}
+.tl-dot{width:12px;height:12px;background:#E50914;border-radius:50%;flex-shrink:0;margin-top:3px}
+.tl-text{font-size:12px;color:#ccc;line-height:1.5}
+.tl-year{font-size:11px;color:#E50914;font-weight:600;margin-bottom:2px}
+.credits-t{font-size:34px;font-weight:700;color:#E50914;margin-bottom:4px}
+.credits-s{font-size:14px;color:#777;margin-bottom:28px}
+.credits-sec{margin-bottom:18px}
+.credits-sec h4{font-size:11px;color:#777;letter-spacing:2px;margin-bottom:6px;text-transform:uppercase}
+.credits-name{font-size:14px;color:#e5e5e5;margin-bottom:3px}
+.divider{width:60px;height:2px;background:#E50914;margin:18px auto}
+@keyframes fadeIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+.slide.active > *{animation:fadeIn .45s ease both}
+</style>
+</head>
+<body>
+
+<div class="progress"><div class="progress-fill" id="prog"></div></div>
+
+<!-- Slide 1: Perfis -->
+<div class="slide active" id="s1">
+  <div class="nf-logo" style="margin-bottom:8px">NETFIX</div>
+  <p style="font-size:15px;color:#aaa;margin-bottom:4px">Quem esta assistindo?</p>
+  <div class="profiles">
+    <div class="profile-card" onclick="go(2)"><div class="avatar" style="background:#0071eb">A</div><span class="profile-name">Ana</span></div>
+    <div class="profile-card" onclick="go(2)"><div class="avatar" style="background:#e87c03">B</div><span class="profile-name">Bruno</span></div>
+    <div class="profile-card" onclick="go(2)"><div class="avatar" style="background:#2d7a4f">C</div><span class="profile-name">Carla</span></div>
+    <div class="profile-card" onclick="go(2)"><div class="avatar" style="background:#b81c28">D</div><span class="profile-name">Diego</span></div>
+  </div>
+  <p style="font-size:12px;color:#555">Clique em qualquer perfil para continuar</p>
+</div>
+
+<!-- Slide 2: Loading -->
+<div class="slide" id="s2">
+  <div style="display:flex;flex-direction:column;align-items:center;gap:24px">
+    <div class="loading-n">N</div>
+    <div class="load-track"><div class="load-fill" id="lb"></div></div>
+  </div>
+</div>
+
+<!-- Slide 3: Catalogo -->
+<div class="slide" id="s3" style="align-items:flex-start;justify-content:flex-start;padding-top:32px">
+  <div style="width:100%">
+    <div class="nf-logo" style="font-size:22px;margin-bottom:18px">NETFIX</div>
+    <div class="cat-header"><span>Inicio</span><span>Series</span><span>Filmes</span><span>Documentarios</span></div>
+    <div class="row-title">EM DESTAQUE HOJE</div>
+    <div class="card-row">
+      <div class="card featured" style="background:#8B1A1A" onclick="go(4)">
+        <div class="card-overlay"></div>
+        <div style="z-index:1"><div style="font-size:9px;color:#E50914;font-weight:700;letter-spacing:1px;margin-bottom:2px">DOCUMENTARIO</div><div class="card-title">Desigualdade de Genero</div></div>
+      </div>
+      <div class="card" style="background:#1a4a8a"><div class="card-overlay"></div><div class="card-title">O Voto Feminino</div></div>
+      <div class="card" style="background:#2d5a2d"><div class="card-overlay"></div><div class="card-title">Trabalho Igual</div></div>
+      <div class="card" style="background:#6a2d6a"><div class="card-overlay"></div><div class="card-title">Vozes Silenciadas</div></div>
+    </div>
+    <div class="row-title">CONTINUAR ASSISTINDO</div>
+    <div class="card-row">
+      <div class="card" style="background:#4a2d1a"><div class="card-overlay"></div><div class="card-title">Feminismo Global</div></div>
+      <div class="card" style="background:#1a3a4a"><div class="card-overlay"></div><div class="card-title">Sufragio</div></div>
+      <div class="card" style="background:#3a1a4a"><div class="card-overlay"></div><div class="card-title">Brechas Salariais</div></div>
+      <div class="card" style="background:#3a4a1a"><div class="card-overlay"></div><div class="card-title">Poder e Genero</div></div>
+    </div>
+    <p style="font-size:12px;color:#555">Clique em "Desigualdade de Genero" para assistir</p>
+  </div>
+</div>
+
+<!-- Slide 4: Play -->
+<div class="slide" id="s4">
+  <div style="text-align:center">
+    <div style="font-size:12px;color:#E50914;letter-spacing:2px;margin-bottom:14px;font-weight:600">NETFIX APRESENTA</div>
+    <div style="font-size:44px;font-weight:900;line-height:1.1;margin-bottom:10px">DESIGUALDADE<br>DE GENERO</div>
+    <div style="font-size:15px;color:#aaa;margin-bottom:24px">Um documentario sobre o que precisamos mudar</div>
+    <div style="display:flex;justify-content:center;gap:12px">
+      <button class="nf-btn" onclick="go(5)">► Assistir</button>
+      <button class="nf-btn-sec" onclick="go(5)">+ Minha lista</button>
+    </div>
+    <div style="margin-top:18px;font-size:12px;color:#555">2025 · Documentario · 1h 47min · 14 anos</div>
+  </div>
+</div>
+
+<!-- Slide 5: Definicao -->
+<div class="slide" id="s5" style="align-items:flex-start;justify-content:flex-start;padding-top:36px">
+  <div><span class="ep-badge">EP. 1</span><span class="ep-cat">DEFINICAO</span></div>
+  <div class="doc-title">O que e desigualdade de genero?</div>
+  <div class="doc-sub">Conceito, dimensoes e por que importa</div>
+  <div class="grid2">
+    <div class="card-dark full"><h4>Definicao</h4><p>Diferenca no tratamento, oportunidades, direitos e bem-estar entre pessoas de diferentes generos, resultante de estruturas sociais, culturais e institucionais historicamente construidas.</p></div>
+    <div class="card-dark"><h4>Dimensoes principais</h4><ul><li>Economica (salario, emprego)</li><li>Politica (representacao)</li><li>Educacional (acesso)</li><li>Saude e bem-estar</li><li>Violencia e seguranca</li></ul></div>
+    <div class="card-dark"><h4>Por que estudar?</h4><ul><li>Afeta metade da humanidade</li><li>Impacto economico global</li><li>Direitos humanos fundamentais</li><li>ODS 5 da ONU</li></ul></div>
+  </div>
+</div>
+
+<!-- Slide 6: Historico -->
+<div class="slide" id="s6" style="align-items:flex-start;justify-content:flex-start;padding-top:36px">
+  <div><span class="ep-badge">EP. 2</span><span class="ep-cat">CONTEXTO HISTORICO</span></div>
+  <div class="doc-title">Uma longa batalha</div>
+  <div class="doc-sub">Como chegamos ate aqui?</div>
+  <div style="width:100%">
+    <div class="tl"><div class="tl-dot"></div><div class="tl-text"><div class="tl-year">Sec. XIX</div>Movimentos sufragistas surgem na Europa e EUA, reivindicando direito ao voto feminino</div></div>
+    <div class="tl"><div class="tl-dot"></div><div class="tl-text"><div class="tl-year">1948</div>Declaracao Universal dos Direitos Humanos reconhece igualdade entre homens e mulheres</div></div>
+    <div class="tl"><div class="tl-dot"></div><div class="tl-text"><div class="tl-year">1960-70</div>Segunda onda feminista: direitos reprodutivos, igualdade no trabalho, violencia domestica</div></div>
+    <div class="tl"><div class="tl-dot"></div><div class="tl-text"><div class="tl-year">1979</div>ONU adota a CEDAW — Convencao sobre Eliminacao de Discriminacao contra a Mulher</div></div>
+    <div class="tl"><div class="tl-dot"></div><div class="tl-text"><div class="tl-year">2015</div>ODS 5: igualdade de genero vira meta global de desenvolvimento sustentavel</div></div>
+    <div class="tl"><div class="tl-dot"></div><div class="tl-text"><div class="tl-year">2017+</div>#MeToo reacende debate global sobre assedio e poder</div></div>
+  </div>
+</div>
+
+<!-- Slide 7: Exemplos -->
+<div class="slide" id="s7" style="align-items:flex-start;justify-content:flex-start;padding-top:36px">
+  <div><span class="ep-badge">EP. 3</span><span class="ep-cat">EXEMPLOS ATUAIS</span></div>
+  <div class="doc-title">Brasil e Mundo</div>
+  <div class="doc-sub">A desigualdade em cena hoje</div>
+  <div class="grid2">
+    <div class="card-dark"><h4>No Brasil</h4><ul><li>Mulheres recebem 20% menos que homens</li><li>Apenas 18% do Congresso e feminino</li><li>1 mulher morta por feminicidio a cada 6h</li><li>Trabalho domestico majoritariamente feminino</li><li>Teto de vidro em cargos executivos</li></ul></div>
+    <div class="card-dark"><h4>No Mundo</h4><ul><li>Apenas 26 paises com paridade de genero</li><li>650 mi de mulheres casadas antes dos 18 anos</li><li>Afganistao proibe educacao feminina</li><li>EUA: 82 cents para cada $1 de homens</li><li>Africa: maior brecha em saude feminina</li></ul></div>
+  </div>
+</div>
+
+<!-- Slide 8: Dados -->
+<div class="slide" id="s8" style="align-items:flex-start;justify-content:flex-start;padding-top:36px">
+  <div><span class="ep-badge">EP. 4</span><span class="ep-cat">DADOS E ESTATISTICAS</span></div>
+  <div class="doc-title">Os numeros que chocam</div>
+  <div class="doc-sub">Fonte: ONU Mulheres, FMI, WEF 2024</div>
+  <div class="grid2">
+    <div class="stat"><div class="stat-n">68%</div><div class="stat-l">da lacuna global de genero ainda precisa ser fechada (WEF 2024)</div></div>
+    <div class="stat"><div class="stat-n">131</div><div class="stat-l">anos estimados para alcançar igualdade no ritmo atual</div></div>
+    <div class="stat"><div class="stat-n">2,7x</div><div class="stat-l">mais tempo que mulheres dedicam a trabalho nao remunerado</div></div>
+    <div class="stat"><div class="stat-n">R$760bi</div><div class="stat-l">ganho potencial ao Brasil com igualdade de genero no trabalho</div></div>
+  </div>
+</div>
+
+<!-- Slide 9: Causas -->
+<div class="slide" id="s9" style="align-items:flex-start;justify-content:flex-start;padding-top:36px">
+  <div><span class="ep-badge">EP. 5</span><span class="ep-cat">CAUSAS</span></div>
+  <div class="doc-title">Raizes do problema</div>
+  <div class="doc-sub">Por que a desigualdade persiste?</div>
+  <div class="grid2">
+    <div class="card-dark"><h4>Estruturais</h4><ul><li>Patriarcado historico e cultural</li><li>Leis e sistemas legais desiguais</li><li>Acesso desigual a educacao</li><li>Trabalho domestico nao valorizado</li></ul></div>
+    <div class="card-dark"><h4>Culturais</h4><ul><li>Estereotipos de genero desde a infancia</li><li>Representacao midiatica distorcida</li><li>Normas religiosas restritivas</li><li>Socializacao diferenciada</li></ul></div>
+    <div class="card-dark"><h4>Economicas</h4><ul><li>Segregacao ocupacional por genero</li><li>Penalidade pela maternidade</li><li>Falta de licenca parental igualitaria</li></ul></div>
+    <div class="card-dark"><h4>Politicas</h4><ul><li>Sub-representacao feminina no poder</li><li>Falta de cotas e politicas afirmativas</li><li>Violencia politica contra mulheres</li></ul></div>
+  </div>
+</div>
+
+<!-- Slide 10: Consequencias -->
+<div class="slide" id="s10" style="align-items:flex-start;justify-content:flex-start;padding-top:36px">
+  <div><span class="ep-badge">EP. 6</span><span class="ep-cat">CONSEQUENCIAS</span></div>
+  <div class="doc-title">O custo da desigualdade</div>
+  <div class="doc-sub">Quando a metade nao tem voz, todos perdem</div>
+  <div class="grid2">
+    <div class="card-dark full" style="border-left:3px solid #E50914;border-radius:0 4px 4px 0"><h4>Para as mulheres</h4><p>Menor autonomia financeira, maior vulnerabilidade a violencia domestica, saude mental prejudicada, menos acesso a cuidados de saude e carreiras de prestigio.</p></div>
+    <div class="card-dark"><h4>Para a economia</h4><ul><li>PIB global 26% menor (McKinsey)</li><li>Desperdicio de capital humano</li><li>Menor inovacao e diversidade</li><li>Pobreza concentrada em mulheres</li></ul></div>
+    <div class="card-dark"><h4>Para a sociedade</h4><ul><li>Democracias menos representativas</li><li>Politicas publicas menos inclusivas</li><li>Ciclos intergeracionais de pobreza</li><li>Violencia como norma naturalizada</li></ul></div>
+  </div>
+</div>
+
+<!-- Slide 11: Solucoes -->
+<div class="slide" id="s11" style="align-items:flex-start;justify-content:flex-start;padding-top:36px">
+  <div><span class="ep-badge">EP. 7</span><span class="ep-cat">SOLUCOES</span></div>
+  <div class="doc-title">O que podemos fazer?</div>
+  <div class="doc-sub">Caminhos reais para a mudanca</div>
+  <div class="grid2">
+    <div class="card-dark"><h4>Politicas publicas</h4><ul><li>Cotas de genero na politica</li><li>Licenca parental igualitaria</li><li>Lei de igualdade salarial</li><li>Creches universais publicas</li></ul></div>
+    <div class="card-dark"><h4>Educacao</h4><ul><li>Educacao nao sexista na infancia</li><li>Combate a estereotipos na escola</li><li>Incentivo de meninas no STEM</li><li>Educacao sexual e de genero</li></ul></div>
+    <div class="card-dark"><h4>Cultura e midia</h4><ul><li>Representatividade feminina na midia</li><li>Combate a violencia simbolica</li><li>Campanhas de conscientizacao</li></ul></div>
+    <div class="card-dark"><h4>Individual e coletivo</h4><ul><li>Divisao igualitaria das tarefas domesticas</li><li>Apoio a negocios liderados por mulheres</li><li>Voto em candidatas e politicas igualitarias</li></ul></div>
+  </div>
+</div>
+
+<!-- Slide 12: Conclusao -->
+<div class="slide" id="s12">
+  <div style="text-align:center;max-width:520px">
+    <div style="font-size:11px;color:#E50914;letter-spacing:2px;margin-bottom:14px">CONCLUSAO</div>
+    <div style="font-size:34px;font-weight:800;line-height:1.2;margin-bottom:16px">"Um mundo igualitario<br>nao e utopia —<br>e escolha."</div>
+    <div style="font-size:14px;color:#aaa;line-height:1.7;margin-bottom:24px">A desigualdade de genero nao e inevitavel. E o resultado de sistemas, decisoes e omissoes. Muda-la exige consciencia, politicas e acao coletiva.</div>
+    <div style="display:flex;justify-content:center;gap:20px;font-size:12px;color:#666"><span>ODS 5 — ONU</span><span>|</span><span>Igualdade ate 2030</span><span>|</span><span>Voce faz parte</span></div>
+  </div>
+</div>
+
+<!-- Slide 13: Creditos -->
+<div class="slide" id="s13">
+  <div style="text-align:center">
+    <div class="credits-t">Desigualdade de Genero</div>
+    <div class="credits-s">2025 · Documentario</div>
+    <div class="divider"></div>
+    <div class="credits-sec"><h4>Direcao e roteiro</h4><div class="credits-name">Sua Turma</div></div>
+    <div class="credits-sec"><h4>Producao</h4><div class="credits-name">Sala de Aula Producoes</div></div>
+    <div class="credits-sec"><h4>Fontes</h4><div class="credits-name" style="font-size:12px;color:#777">ONU Mulheres · WEF 2024 · IBGE · McKinsey</div></div>
+    <div class="divider"></div>
+    <div style="font-size:11px;color:#444;letter-spacing:1px">NETFIX ORIGINALS · 2025</div>
+  </div>
+</div>
+
+<div class="nav">
+  <button class="nav-btn" id="btn-prev" onclick="prev()" disabled>← Anterior</button>
+  <div class="dots" id="dots"></div>
+  <button class="nav-btn" id="btn-next" onclick="next()">Proximo →</button>
+</div>
+
+<script>
+const total=13;let cur=1;
+function buildDots(){
+  const c=document.getElementById('dots');c.innerHTML='';
+  for(let i=1;i<=total;i++){
+    const d=document.createElement('div');
+    d.className='dot'+(i===cur?' active':'');
+    d.onclick=()=>go(i);c.appendChild(d);
+  }
+}
+function go(n){
+  document.getElementById('s'+cur).classList.remove('active');
+  cur=n;
+  document.getElementById('s'+cur).classList.add('active');
+  document.getElementById('prog').style.width=(cur/total*100)+'%';
+  document.getElementById('btn-prev').disabled=cur===1;
+  document.getElementById('btn-next').disabled=cur===total;
+  buildDots();
+  if(n===2)setTimeout(()=>go(3),1800);
+}
+function next(){if(cur<total)go(cur+1);}
+function prev(){if(cur>1)go(cur-1);}
+document.addEventListener('keydown',e=>{
+  if(e.key==='ArrowRight'||e.key===' ')next();
+  if(e.key==='ArrowLeft')prev();
+});
+buildDots();
+</script>
+</body>
+</html>
