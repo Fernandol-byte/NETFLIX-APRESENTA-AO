@@ -8,6 +8,21 @@ function buildDots(){
     d.onclick=()=>go(i);c.appendChild(d);
   }
 }
+function animateLetters() {
+  const letters = 'NETFIX';
+  const el = document.getElementById('nf-letters');
+  el.textContent = '';
+  let i = 0;
+  const iv = setInterval(() => {
+    if (i >= letters.length) {
+      clearInterval(iv);
+      setTimeout(() => go(3), 800);
+      return;
+    }
+    el.textContent += letters[i];
+    i++;
+  }, 250);
+}
 function go(n){
   document.getElementById('s'+cur).classList.remove('active');
   cur=n;
