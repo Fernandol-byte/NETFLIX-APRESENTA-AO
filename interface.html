@@ -270,7 +270,7 @@ function go(n){
   document.getElementById('btn-prev').disabled=cur===1;
   document.getElementById('btn-next').disabled=cur===total;
   buildDots();
-  if(n===2)setTimeout(()=>go(3),1800);
+  if(n===2 && cur!== 1)setTimeout(()=>go(3),1800);
 }
 function next(){if(cur<total)go(cur+1);}
 function prev(){if(cur>1)go(cur-1);}
