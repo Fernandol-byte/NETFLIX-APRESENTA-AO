@@ -1,4 +1,4 @@
-const total=13;let cur=1;
+const total=14;let cur=1;
 
 function animateLetters(){
   const letters='NETFIX';
