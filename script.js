@@ -6,10 +6,14 @@ function animateLetters(){
   el.textContent='';
   let i=0;
   const iv=setInterval(()=>{
-    if(i>=letters.length){clearInterval(iv);setTimeout(()=>go(3),800);return;}
+    if(i>=letters.length){
+      clearInterval(iv);
+      setTimeout(()=>go(3),1000);
+      return;
+    }
     el.textContent+=letters[i];
     i++;
-  },250);
+  },300);
 }
 
 function buildDots(){
