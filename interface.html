@@ -1,323 +1,495 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Desigualdade de Genero - Netflix</title>
-<link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Desigualdade de Gênero - Netflix</title>
+  <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
-<div class="progress"><div class="progress-fill" id="prog"></div></div>
-
-<!-- Slide 1: Perfis -->
-<div class="slide active" id="s1">
-  <div class="nf-logo" style="margin-bottom:10px">NETFIX</div>
-  <p style="font-size:25px;color:#aaa;margin-bottom:4px">Quem esta assistindo?</p>
-  <div class="profiles" id="profiles-grid">
-  <div class="profile-card" onclick="go(2)"><div class="avatar" style="background:#0071eb;overflow:hidden;padding:0"><img src="fotofernando.jpeg" style="width:100%;height:100%;object-fit:cover;display:block"></div><span class="profile-name">FERNANDO GRILO</span></div>
-  <div class="profile-card" onclick="go(2)"><div class="avatar" style="background:#e87c03;overflow:hidden;padding:0"><img src="fotoemanuel.jpeg" style="width:100%;height:100%;object-fit:cover;display:block"></div><span class="profile-name">EMANUCREL</span></div>
-  <div class="profile-card" onclick="go(2)"><div class="avatar" style="background:#2d7a4f;overflow:hidden;padding:0"><img src="fotodavi.jpeg" style="width:100%;height:100%;object-fit:cover;display:block"></div><span class="profile-name">DAVI SHOW</span></div>
-  <div class="profile-card" onclick="openAddProfile()"><div class="avatar" style="background:#333;display:flex;align-items:center;justify-content:center;font-size:48px;color:#aaa">+</div><span class="profile-name">Adicionar</span></div>
-</div>
-
-<div id="add-modal" style="display:none;position:absolute;inset:0;background:rgba(0,0,0,0.85);align-items:center;justify-content:center;z-index:99">
-  <div style="background:#1f1f1f;padding:32px;border-radius:8px;width:320px;text-align:center">
-    <div style="font-size:25px;font-weight:700;margin-bottom:20px">Novo Perfil</div>
-    <input id="new-name" placeholder="Seu nome" style="width:100%;padding:10px;border-radius:4px;border:1px solid #555;background:#333;color:#fff;font-size:14px;margin-bottom:12px">
-    <input id="new-photo" type="file" accept="image/*" style="width:100%;padding:10px;border-radius:4px;border:1px solid #555;background:#333;color:#aaa;font-size:13px;margin-bottom:20px">
-    <div style="display:flex;gap:10px;justify-content:center">
-      <button onclick="closeModal()" style="background:#555;color:#fff;border:none;padding:10px 20px;border-radius:4px;cursor:pointer;font-size:14px">Cancelar</button>
-      <button onclick="addProfile()" style="background:#E50914;color:#fff;border:none;padding:10px 20px;border-radius:4px;cursor:pointer;font-size:14px">Adicionar</button>
-    </div>
+  <div class="progress">
+    <div class="progress-fill" id="prog"></div>
   </div>
-</div>
-  <p style="font-size:15px;color:#555">Clique em qualquer perfil para continuar</p>
-</div>
 
-<!-- Slide 2: Loading -->
-<div class="slide" id="s2">
-  <div style="display:flex;flex-direction:column;align-items:center;gap:24px">
-    <div id="nf-letters" class="loading-n"></div>
-    <div class="load-track"><div class="load-fill" id="lb"></div></div>
-  </div>
-</div>
-
-<!-- Slide 3: Catalogo -->
-<div class="slide" id="s3" style="align-items:flex-start;justify-content:flex-start;padding-top:32px">
-  <div style="width:100%">
-    <div class="nf-logo" style="font-size:22px;margin-bottom:18px">NETFIX</div>
-    <div class="cat-header"><span>Inicio</span><span>Series</span><span>Filmes</span><span>Documentarios</span></div>
-    <div class="row-title">EM DESTAQUE HOJE</div>
-    <div class="card-row">
-      <div class="card featured" style="background:#8B1A1A" onclick="go(4)">
-        <div class="card-overlay"></div>
-        <div style="z-index:1"><div style="font-size:9px;color:#E50914;font-weight:700;letter-spacing:1px;margin-bottom:2px">DOCUMENTARIO</div><div class="card-title">Desigualdade de Genero</div></div>
+  <!-- Slide 1: Perfis -->
+  <div class="slide active" id="s1">
+    <div class="nf-logo" style="margin-bottom:10px">NETFIX</div>
+    <p style="font-size:25px;color:#aaa;margin-bottom:4px">Quem está assistindo?</p>
+    <div class="profiles" id="profiles-grid">
+      <div class="profile-card" onclick="go(2)">
+        <div class="avatar" style="background:#0071eb;overflow:hidden;padding:0"><img src="fotofernando.jpeg"
+            style="width:100%;height:100%;object-fit:cover;display:block"></div><span class="profile-name">FERNANDO
+          GRILO</span>
       </div>
-      <div class="card" style="background:#1a4a8a"><div class="card-overlay"></div><div class="card-title">O Voto Feminino</div></div>
-      <div class="card" style="background:#2d5a2d"><div class="card-overlay"></div><div class="card-title">Trabalho Igual</div></div>
-      <div class="card" style="background:#6a2d6a"><div class="card-overlay"></div><div class="card-title">Vozes Silenciadas</div></div>
-    </div>
-    <div class="row-title">CONTINUAR ASSISTINDO</div>
-    <div class="card-row">
-      <div class="card" style="background:#4a2d1a"><div class="card-overlay"></div><div class="card-title">Feminismo Global</div></div>
-      <div class="card" style="background:#1a3a4a"><div class="card-overlay"></div><div class="card-title">Sufragio</div></div>
-      <div class="card" style="background:#3a1a4a"><div class="card-overlay"></div><div class="card-title">Brechas Salariais</div></div>
-      <div class="card" style="background:#3a4a1a"><div class="card-overlay"></div><div class="card-title">Poder e Genero</div></div>
-    </div>
-    <p style="font-size:12px;color:#555">Clique em "Desigualdade de Genero" para assistir</p>
-  </div>
-</div>
-
-<!-- Slide 4: Play -->
-<div class="slide" id="s4">
-  <div style="text-align:center">
-    <div style="font-size:12px;color:#E50914;letter-spacing:2px;margin-bottom:14px;font-weight:600">NETFIX APRESENTA</div>
-    <div style="font-size:44px;font-weight:900;line-height:1.1;margin-bottom:10px">DESIGUALDADE<br>DE GENERO</div>
-    <div style="font-size:15px;color:#aaa;margin-bottom:24px">Um documentario sobre o que precisamos mudar</div>
-    <div style="display:flex;justify-content:center;gap:12px">
-      <button class="nf-btn" onclick="go(5)">► Assistir</button>
-      <button class="nf-btn-sec" onclick="go(5)">+ Minha lista</button>
-    </div>
-    <div style="margin-top:18px;font-size:12px;color:#555">2025 · Documentario · 1h 47min · 14 anos</div>
-  </div>
-</div>
-
-<!-- Slide 5: Definicao -->
-<div class="slide" id="s5" style="align-items:flex-start;justify-content:flex-start;padding-top:36px">
-  <div><span class="ep-badge">EP. 1</span><span class="ep-cat">DEFINICAO</span></div>
-  <div class="doc-title">O que é desigualdade de gênero?</div>
-  <div class="doc-sub">Conceito, dimensões e por que importa</div>
-
-  <div class="grid2">
-    
-    <div class="card-dark full">
-      <h4>Definição</h4>
-      <p>
-        Desigualdade de gênero é a distribuição desigual de direitos, oportunidades, poder e recursos entre homens e mulheres, 
-        perpetuando a subordinação feminina. Enraizada na cultura patriarcal e no machismo, ela se manifesta na diferença salarial, 
-        dupla jornada de trabalho, violência doméstica <br>
-        e menor representação feminina em cargos de liderança.
-      </p>
-    </div>
-
-    <div class="card-dark">
-      <h4>Dimensões principais</h4>
-      <ul>
-        <li>Economia → mulheres ganham menos e têm menos cargos altos.</li>
-        <li>Política → pouca presença feminina no poder.</li>
-        <li>Educação → desigualdade em algumas áreas e oportunidades.</li>
-        <li>Saúde e bem-estar → sobrecarga e acesso desigual a cuidados.</li>
-        <li>Violência e segurança → mais vítimas de violência e insegurança.</li>
-      </ul>
-    </div>
-
-    <div class="card-dark">
-      <h4>Por que estudar?</h4>
-      <p>
-        Estudar a desigualdade de gênero é importante para entender as injustiças, combater desigualdades, 
-        promover o respeito e ajudar <br>
-        a construir uma sociedade mais justa, onde todos tenham as mesmas oportunidades.
-      </p>
-    </div>
-
-  </div>
-</div>
-
-<!-- Slide 6: Historico -->
-<div class="slide" id="s6" style="align-items:flex-start;justify-content:flex-start;padding-top:36px">
-  <div><span class="ep-badge">EP. 2</span><span class="ep-cat">CONTEXTO HISTÓRICO</span></div>
-  <div class="doc-title">Uma longa batalha</div>
-  <div class="doc-sub">Como chegamos até aqui?</div>
-
-  <div style="width:100%">
-
-    <div class="tl">
-      <div class="tl-dot"></div>
-      <div class="tl-text">
-        <div class="tl-year">Século XVIII — Origem das ideias</div>
-          <li>Debate sobre igualdade surge com o Iluminismo</li>
-          <li>Mary Wollstonecraft defende educação feminina (1792)</li>
+      <div class="profile-card" onclick="go(2)">
+        <div class="avatar" style="background:#e87c03;overflow:hidden;padding:0"><img src="fotoemanuel.jpeg"
+            style="width:100%;height:100%;object-fit:cover;display:block"></div><span
+          class="profile-name">EMANUCREL</span>
+      </div>
+      <div class="profile-card" onclick="go(2)">
+        <div class="avatar" style="background:#2d7a4f;overflow:hidden;padding:0"><img src="fotodavi.jpeg"
+            style="width:100%;height:100%;object-fit:cover;display:block"></div><span class="profile-name">DAVI
+          SHOW</span>
+      </div>
+      <div class="profile-card" onclick="openAddProfile()">
+        <div class="avatar"
+          style="background:#333;display:flex;align-items:center;justify-content:center;font-size:48px;color:#aaa">+
+        </div><span class="profile-name">Adicionar</span>
       </div>
     </div>
 
-    <div class="tl">
-      <div class="tl-dot"></div>
-      <div class="tl-text">
-        <div class="tl-year">Século XIX — Surgimento dos movimentos</div>
-          <li>Revolução Industrial → mulheres entram no trabalho</li>
-          <li>Movimentos sufragistas surgem na Europa e EUA</li>
-          <li>👉 luta pelo direito ao voto feminino</li>
+    <div id="add-modal"
+      style="display:none;position:absolute;inset:0;background:rgba(0,0,0,0.85);align-items:center;justify-content:center;z-index:99">
+      <div style="background:#1f1f1f;padding:32px;border-radius:8px;width:320px;text-align:center">
+        <div style="font-size:25px;font-weight:700;margin-bottom:20px">Novo Perfil</div>
+        <input id="new-name" placeholder="Seu nome"
+          style="width:100%;padding:10px;border-radius:4px;border:1px solid #555;background:#333;color:#fff;font-size:14px;margin-bottom:12px">
+        <input id="new-photo" type="file" accept="image/*"
+          style="width:100%;padding:10px;border-radius:4px;border:1px solid #555;background:#333;color:#aaa;font-size:13px;margin-bottom:20px">
+        <div style="display:flex;gap:10px;justify-content:center">
+          <button onclick="closeModal()"
+            style="background:#555;color:#fff;border:none;padding:10px 20px;border-radius:4px;cursor:pointer;font-size:14px">Cancelar</button>
+          <button onclick="addProfile()"
+            style="background:#E50914;color:#fff;border:none;padding:10px 20px;border-radius:4px;cursor:pointer;font-size:14px">Adicionar</button>
+        </div>
       </div>
     </div>
+    <p style="font-size:15px;color:#555">Clique em qualquer perfil para continuar</p>
+  </div>
 
-    <div class="tl">
-      <div class="tl-dot"></div>
-      <div class="tl-text">
-        <div class="tl-year">Início do século XX — Direito ao voto</div>
-          <li>Mulheres conquistam o voto em vários países</li>
-          <li>No Brasil: 1932</li>
+  <!-- Slide 2: Loading -->
+  <div class="slide" id="s2">
+    <div style="display:flex;flex-direction:column;align-items:center;gap:24px">
+      <div id="nf-letters" class="loading-n"></div>
+      <div class="load-track">
+        <div class="load-fill" id="lb"></div>
       </div>
     </div>
+  </div>
 
-    <div class="tl">
-      <div class="tl-dot"></div>
-      <div class="tl-text">
-        <div class="tl-year">1948 — Igualdade reconhecida</div>
-          <li>ONU proclama a Declaração Universal dos Direitos Humanos</li>
-          <li>👉 igualdade entre homens e mulheres</li>
+  <!-- Slide 3: Catálogo -->
+  <div class="slide" id="s3" style="align-items:flex-start;justify-content:flex-start;padding-top:32px">
+    <div style="width:100%">
+      <div class="nf-logo" style="font-size:22px;margin-bottom:18px">NETFIX</div>
+      <div class="cat-header"><span>Início</span><span>Séries</span><span>Filmes</span><span>Documentários</span></div>
+      <div class="row-title">EM DESTAQUE HOJE</div>
+      <div class="card-row">
+        <div class="card featured" style="background:#8B1A1A" onclick="go(4)">
+          <div class="card-overlay"></div>
+          <div style="z-index:1">
+            <div style="font-size:9px;color:#E50914;font-weight:700;letter-spacing:1px;margin-bottom:2px">DOCUMENTÁRIO</div>
+            <div class="card-title">Desigualdade de Gênero</div>
+          </div>
+        </div>
+        <div class="card" style="background:#1a4a8a">
+          <div class="card-overlay"></div>
+          <div class="card-title">O Voto Feminino</div>
+        </div>
+        <div class="card" style="background:#2d5a2d">
+          <div class="card-overlay"></div>
+          <div class="card-title">Trabalho Igual</div>
+        </div>
+        <div class="card" style="background:#6a2d6a">
+          <div class="card-overlay"></div>
+          <div class="card-title">Vozes Silenciadas</div>
+        </div>
+      </div>
+      <div class="row-title">CONTINUAR ASSISTINDO</div>
+      <div class="card-row">
+        <div class="card" style="background:#4a2d1a">
+          <div class="card-overlay"></div>
+          <div class="card-title">Feminismo Global</div>
+        </div>
+        <div class="card" style="background:#1a3a4a">
+          <div class="card-overlay"></div>
+          <div class="card-title">Sufrágio</div>
+        </div>
+        <div class="card" style="background:#3a1a4a">
+          <div class="card-overlay"></div>
+          <div class="card-title">Brechas Salariais</div>
+        </div>
+        <div class="card" style="background:#3a4a1a">
+          <div class="card-overlay"></div>
+          <div class="card-title">Poder e Gênero</div>
+        </div>
+      </div>
+      <p style="font-size:12px;color:#555">Clique em "Desigualdade de Gênero" para assistir</p>
+    </div>
+  </div>
+
+  <!-- Slide 4: Play -->
+  <div class="slide" id="s4">
+    <div style="text-align:center">
+      <div style="font-size:12px;color:#E50914;letter-spacing:2px;margin-bottom:14px;font-weight:600">NETFIX APRESENTA</div>
+      <div style="font-size:44px;font-weight:900;line-height:1.1;margin-bottom:10px">DESIGUALDADE<br>DE GÊNERO</div>
+      <div style="font-size:15px;color:#aaa;margin-bottom:24px">Um documentário sobre o que precisamos mudar</div>
+      <div style="display:flex;justify-content:center;gap:12px">
+        <button class="nf-btn" onclick="go(5)">► Assistir</button>
+        <button class="nf-btn-sec" onclick="go(5)">+ Minha lista</button>
+      </div>
+      <div style="margin-top:18px;font-size:12px;color:#555">2025 · Documentário · 1h 47min · 14 anos</div>
+    </div>
+  </div>
+
+  <!-- Slide 5: Definição -->
+  <div class="slide" id="s5" style="align-items:flex-start;justify-content:flex-start;padding-top:36px">
+    <div><span class="ep-badge">EP. 1</span><span class="ep-cat">DEFINIÇÃO</span></div>
+    <div class="doc-title">O que é desigualdade de gênero?</div>
+    <div class="doc-sub">Conceito, dimensões e por que importa</div>
+
+    <div class="grid2">
+
+      <div class="card-dark full">
+        <h4>Definição</h4>
+        <p>
+          Desigualdade de gênero é a distribuição desigual de direitos, oportunidades, poder e recursos entre homens e
+          mulheres, perpetuando a subordinação feminina. Enraizada na cultura patriarcal e no machismo, ela se manifesta
+          na diferença salarial, dupla jornada de trabalho, violência doméstica e menor representação feminina em cargos
+          de liderança.
+        </p>
+      </div>
+
+      <div class="card-dark">
+        <h4>Dimensões principais</h4>
+        <ul>
+          <li>Economia → mulheres ganham menos e têm menos cargos altos.</li>
+          <li>Política → pouca presença feminina no poder.</li>
+          <li>Educação → desigualdade em algumas áreas e oportunidades.</li>
+          <li>Saúde e bem-estar → sobrecarga e acesso desigual a cuidados.</li>
+          <li>Violência e segurança → mais vítimas de violência e insegurança.</li>
+        </ul>
+      </div>
+
+      <div class="card-dark">
+        <h4>Por que estudar?</h4>
+        <p>
+          Estudar a desigualdade de gênero é importante para entender as injustiças, combater desigualdades, promover o
+          respeito e ajudar a construir uma sociedade mais justa, onde todos tenham as mesmas oportunidades.
+        </p>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Slide 6: Histórico -->
+  <div class="slide" id="s6" style="align-items:flex-start;justify-content:flex-start;padding-top:36px">
+    <div><span class="ep-badge">EP. 2</span><span class="ep-cat">CONTEXTO HISTÓRICO</span></div>
+    <div class="doc-title">Uma longa batalha</div>
+    <div class="doc-sub">Como chegamos até aqui?</div>
+
+    <div style="width:100%">
+
+      <div class="tl">
+        <div class="tl-dot"></div>
+        <div class="tl-text">
+          <div class="tl-year">Século XVIII — Origem das ideias</div>
+          Debate sobre igualdade surge com o Iluminismo. Mary Wollstonecraft defende educação feminina (1792).
+        </div>
+      </div>
+
+      <div class="tl">
+        <div class="tl-dot"></div>
+        <div class="tl-text">
+          <div class="tl-year">Século XIX — Surgimento dos movimentos</div>
+          Revolução Industrial leva mulheres ao trabalho. Movimentos sufragistas surgem na Europa e EUA — luta pelo direito ao voto feminino.
+        </div>
+      </div>
+
+      <div class="tl">
+        <div class="tl-dot"></div>
+        <div class="tl-text">
+          <div class="tl-year">Início do século XX — Direito ao voto</div>
+          Mulheres conquistam o voto em vários países. No Brasil: 1932.
+        </div>
+      </div>
+
+      <div class="tl">
+        <div class="tl-dot"></div>
+        <div class="tl-text">
+          <div class="tl-year">1948 — Igualdade reconhecida</div>
+          ONU proclama a Declaração Universal dos Direitos Humanos, afirmando a igualdade entre homens e mulheres.
+        </div>
+      </div>
+
+      <div class="tl">
+        <div class="tl-dot"></div>
+        <div class="tl-text">
+          <div class="tl-year">1960–1970 — Segunda onda feminista</div>
+          Luta por direitos reprodutivos, igualdade no trabalho e combate à violência doméstica.
+        </div>
+      </div>
+
+      <div class="tl">
+        <div class="tl-dot"></div>
+        <div class="tl-text">
+          <div class="tl-year">1979 — CEDAW</div>
+          Convenção da ONU para eliminar todas as formas de discriminação contra a mulher.
+        </div>
+      </div>
+
+      <div class="tl">
+        <div class="tl-dot"></div>
+        <div class="tl-text">
+          <div class="tl-year">1990–2000 — Expansão de políticas</div>
+          Leis contra violência doméstica, mais acesso à educação e trabalho, e mais mulheres na política.
+        </div>
+      </div>
+
+      <div class="tl">
+        <div class="tl-dot"></div>
+        <div class="tl-text">
+          <div class="tl-year">2015 — ODS 5</div>
+          Igualdade de gênero vira meta global com os Objetivos de Desenvolvimento Sustentável da ONU.
+        </div>
+      </div>
+
+      <div class="tl">
+        <div class="tl-dot"></div>
+        <div class="tl-text">
+          <div class="tl-year">2017+ — #MeToo</div>
+          Debate global sobre assédio, abuso de poder e desigualdade estrutural ganha força.
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Slide 7: Exemplos -->
+  <div class="slide" id="s7" style="align-items:flex-start;justify-content:flex-start;padding-top:36px">
+    <div><span class="ep-badge">EP. 3</span><span class="ep-cat">EXEMPLOS ATUAIS</span></div>
+    <div class="doc-title">Brasil e Mundo</div>
+    <div class="doc-sub">A desigualdade em cena hoje</div>
+    <div class="grid2">
+      <div class="card-dark">
+        <h4>No Brasil</h4>
+        <ul>
+          <li>Mulheres recebem 20% menos que homens</li>
+          <li>Apenas 18% do Congresso é feminino</li>
+          <li>1 mulher morta por feminicídio a cada 6h</li>
+          <li>Trabalho doméstico majoritariamente feminino</li>
+          <li>Teto de vidro em cargos executivos</li>
+        </ul>
+      </div>
+      <div class="card-dark">
+        <h4>No Mundo</h4>
+        <ul>
+          <li>Apenas 26 países com paridade de gênero</li>
+          <li>650 milhões de mulheres casadas antes dos 18 anos</li>
+          <li>Afeganistão proíbe educação feminina</li>
+          <li>EUA: 82 cents para cada $1 de homens</li>
+          <li>África: maior brecha em saúde feminina</li>
+        </ul>
       </div>
     </div>
+  </div>
 
-    <div class="tl">
-      <div class="tl-dot"></div>
-      <div class="tl-text">
-        <div class="tl-year">1960–1970 — Segunda onda feminista</div>
-          <li>Direitos reprodutivos</li>
-          <li>Igualdade no trabalho</li>
-          <li>Combate à violência doméstica</li>
+  <!-- Slide 8: Dados -->
+  <div class="slide" id="s8" style="align-items:flex-start;justify-content:flex-start;padding-top:36px">
+    <div><span class="ep-badge">EP. 4</span><span class="ep-cat">DADOS E ESTATÍSTICAS</span></div>
+    <div class="doc-title">Os números que chocam</div>
+    <div class="doc-sub">Fonte: ONU Mulheres, FMI, WEF 2024</div>
+    <div class="grid2">
+      <div class="stat">
+        <div class="stat-n">68%</div>
+        <div class="stat-l">da lacuna global de gênero ainda precisa ser fechada (WEF 2024)</div>
+      </div>
+      <div class="stat">
+        <div class="stat-n">131</div>
+        <div class="stat-l">anos estimados para alcançar igualdade no ritmo atual</div>
+      </div>
+      <div class="stat">
+        <div class="stat-n">2,7x</div>
+        <div class="stat-l">mais tempo que mulheres dedicam a trabalho não remunerado</div>
+      </div>
+      <div class="stat">
+        <div class="stat-n">R$760bi</div>
+        <div class="stat-l">ganho potencial ao Brasil com igualdade de gênero no trabalho</div>
       </div>
     </div>
+  </div>
 
-    <div class="tl">
-      <div class="tl-dot"></div>
-      <div class="tl-text">
-        <div class="tl-year">1979 — CEDAW</div>
-          <li>Convenção da ONU contra discriminação da mulher</li>
+  <!-- Slide 9: Causas -->
+  <div class="slide" id="s9" style="align-items:flex-start;justify-content:flex-start;padding-top:36px">
+    <div><span class="ep-badge">EP. 5</span><span class="ep-cat">CAUSAS</span></div>
+    <div class="doc-title">Raízes do problema</div>
+    <div class="doc-sub">Por que a desigualdade persiste?</div>
+    <div class="grid2">
+      <div class="card-dark">
+        <h4>Estruturais</h4>
+        <ul>
+          <li>Patriarcado histórico e cultural → sistema que privilegia homens</li>
+          <li>Leis e sistemas legais desiguais → direitos não aplicados igualmente</li>
+          <li>Acesso desigual à educação → menos oportunidades para mulheres</li>
+          <li>Trabalho doméstico não valorizado → trabalho não pago e invisível</li>
+        </ul>
+      </div>
+
+      <div class="card-dark">
+        <h4>Culturais</h4>
+        <ul>
+          <li>Estereótipos de gênero desde a infância → limitam comportamentos e escolhas</li>
+          <li>Representação midiática distorcida → mulheres retratadas de forma inferior</li>
+          <li>Normas religiosas restritivas → impõem papéis sociais limitados</li>
+          <li>Socialização diferenciada → criação diferente entre homens e mulheres</li>
+        </ul>
+      </div>
+
+      <div class="card-dark">
+        <h4>Econômicas</h4>
+        <ul>
+          <li>Segregação ocupacional por gênero → profissões separadas e desiguais</li>
+          <li>Penalidade pela maternidade → impacto negativo na carreira</li>
+          <li>Falta de licença parental igualitária → desigualdade nas responsabilidades</li>
+        </ul>
+      </div>
+
+      <div class="card-dark">
+        <h4>Políticas</h4>
+        <ul>
+          <li>Sub-representação feminina no poder → poucas mulheres em cargos políticos</li>
+          <li>Falta de cotas e políticas afirmativas → pouca correção da desigualdade</li>
+          <li>Violência política contra mulheres → intimidação e ataques</li>
+        </ul>
       </div>
     </div>
+  </div>
 
-    <div class="tl">
-      <div class="tl-dot"></div>
-      <div class="tl-text">
-        <div class="tl-year">1990–2000 — Expansão</div>
-          <li>Leis contra violência doméstica</li>
-          <li>Mais acesso à educação e trabalho</li>
-          <li>Mais mulheres na política</li>
+  <!-- Slide 10: Consequências -->
+  <div class="slide" id="s10" style="align-items:flex-start;justify-content:flex-start;padding-top:36px">
+    <div><span class="ep-badge">EP. 6</span><span class="ep-cat">CONSEQUÊNCIAS</span></div>
+    <div class="doc-title">O custo da desigualdade</div>
+    <div class="doc-sub">Quando a metade não tem voz, todos perdem</div>
+    <div class="grid2">
+      <div class="card-dark full" style="border-left:3px solid #E50914;border-radius:0 4px 4px 0">
+        <h4>Para as mulheres</h4>
+        <p>A desigualdade de gênero reduz a autonomia financeira das mulheres, deixando muitas dependentes
+          economicamente. Isso aumenta a vulnerabilidade à violência doméstica e prejudica a saúde mental devido à
+          sobrecarga e pressão constante. Além disso, limita o acesso a cuidados de saúde adequados e a carreiras de
+          maior prestígio e remuneração.</p>
+      </div>
+      <div class="card-dark">
+        <h4>Para a economia</h4>
+        <ul>
+          <li>PIB global 26% menor (McKinsey) → a exclusão feminina reduz a produtividade e o crescimento econômico mundial.</li>
+          <li>Desperdício de capital humano → talentos femininos são ignorados pelo mercado.</li>
+          <li>Menor inovação e diversidade → menos ideias e soluções criativas.</li>
+          <li>Pobreza concentrada em mulheres → mais afetadas pela desigualdade econômica.</li>
+        </ul>
+      </div>
+      <div class="card-dark">
+        <h4>Para a sociedade</h4>
+        <ul>
+          <li>Democracias menos representativas → decisões políticas não refletem toda a população.</li>
+          <li>Políticas públicas menos inclusivas → áreas essenciais como saúde da mulher são ignoradas.</li>
+          <li>Ciclos intergeracionais de pobreza → desigualdade transmitida de geração em geração.</li>
+          <li>Violência como norma naturalizada → agressões deixam de ser combatidas com seriedade.</li>
+        </ul>
       </div>
     </div>
+  </div>
 
-    <div class="tl">
-      <div class="tl-dot"></div>
-      <div class="tl-text">
-        <div class="tl-year">2015 — ODS 5</div>
-          <li>Igualdade de gênero vira meta global</li>
+  <!-- Slide 11: Soluções -->
+  <div class="slide" id="s11" style="align-items:flex-start;justify-content:flex-start;padding-top:36px">
+    <div><span class="ep-badge">EP. 7</span><span class="ep-cat">SOLUÇÕES</span></div>
+    <div class="doc-title">O que podemos fazer?</div>
+    <div class="doc-sub">Caminhos reais para a mudança</div>
+    <div class="grid2">
+      <div class="card-dark">
+        <h4>Políticas públicas</h4>
+        <ul>
+          <li>Cotas de gênero na política → garantem participação feminina e aceleram a igualdade.</li>
+          <li>Licença parental igualitária → divide responsabilidades e reduz preconceito no trabalho.</li>
+          <li>Lei de igualdade salarial → combate a diferença de remuneração entre homens e mulheres.</li>
+          <li>Creches universais públicas → permitem que mulheres trabalhem e estudem sem sobrecarga.</li>
+        </ul>
+      </div>
+      <div class="card-dark">
+        <h4>Educação</h4>
+        <ul>
+          <li>Educação não sexista na infância → forma crianças com visão de igualdade desde cedo.</li>
+          <li>Combate a estereótipos na escola → amplia escolhas e quebra limitações sociais.</li>
+          <li>Educação sexual e de gênero → promove respeito e previne abusos.</li>
+        </ul>
+      </div>
+      <div class="card-dark">
+        <h4>Cultura e mídia</h4>
+        <ul>
+          <li>Representatividade feminina na mídia → inspira e normaliza mulheres no poder.</li>
+          <li>Combate à violência simbólica → reduz preconceitos e estereótipos.</li>
+          <li>Campanhas de conscientização → incentivam mudança social.</li>
+        </ul>
+      </div>
+      <div class="card-dark">
+        <h4>Individual e coletivo</h4>
+        <ul>
+          <li>Divisão igualitária das tarefas domésticas → reduz desigualdade dentro de casa.</li>
+          <li>Apoio a negócios liderados por mulheres → fortalece autonomia econômica.</li>
+          <li>Voto em candidatas e políticas igualitárias → impulsiona políticas de igualdade.</li>
+        </ul>
       </div>
     </div>
+  </div>
 
-    <div class="tl">
-      <div class="tl-dot"></div>
-      <div class="tl-text">
-        <div class="tl-year">2017+ — #MeToo</div>
-          <li>Debate sobre assédio</li>
-          <li>Abuso de poder</li>
-          <li>Desigualdade estrutural</li>
-      </div>
+  <!-- Slide 12: Vídeo -->
+  <div class="slide" id="s12" style="align-items:center;justify-content:center;flex-direction:column;gap:16px">
+    <iframe width="80%" height="400px" src="https://www.youtube.com/embed/xSyXSiEyics" frameborder="0" allowfullscreen
+      style="border-radius:8px;border:2px solid #E50914"></iframe>
+    <p style="font-size:12px;color:#aaa;max-width:80%;text-align:center;line-height:1.7">
+      No vídeo, as desigualdades de gênero no mercado de trabalho brasileiro são comentadas por <span
+        style="color:#E50914">Jurema Werneck</span> (Diretora da ONG Criola), <span style="color:#E50914">Helena
+        Hirata</span> (Especialista em sociologia do trabalho e do gênero e professora da Universidade de Paris VIII) e
+      <span style="color:#E50914">Hildete Pereira de Melo</span> (Editora da Revista GÊNERO e Coordenadora do Núcleo
+      Transdisciplinar de Estudos de Gênero da UFF).
+    </p>
+  </div>
+
+  <!-- Slide 13: Conclusão -->
+  <div class="slide" id="s13">
+    <div style="text-align:center;max-width:520px">
+      <div style="font-size:11px;color:#E50914;letter-spacing:2px;margin-bottom:14px">CONCLUSÃO</div>
+      <div style="font-size:34px;font-weight:800;line-height:1.2;margin-bottom:16px">"Um mundo igualitário<br>não é
+        utopia —<br>é escolha."</div>
+      <div style="font-size:14px;color:#aaa;line-height:1.7;margin-bottom:24px">A desigualdade de gênero não é
+        inevitável. É o resultado de sistemas, decisões e omissões. Mudá-la exige consciência, políticas e ação
+        coletiva.</div>
+      <div style="display:flex;justify-content:center;gap:20px;font-size:12px;color:#666"><span>ODS 5 —
+          ONU</span><span>|</span><span>Igualdade até 2030</span><span>|</span><span>Você faz parte</span></div>
     </div>
-
   </div>
-</div>
 
-<!-- Slide 7: Exemplos -->
-<div class="slide" id="s7" style="align-items:flex-start;justify-content:flex-start;padding-top:36px">
-  <div><span class="ep-badge">EP. 3</span><span class="ep-cat">EXEMPLOS ATUAIS</span></div>
-  <div class="doc-title">Brasil e Mundo</div>
-  <div class="doc-sub">A desigualdade em cena hoje</div>
-  <div class="grid2">
-    <div class="card-dark"><h4>No Brasil</h4><ul><li>Mulheres recebem 20% menos que homens</li><li>Apenas 18% do Congresso e feminino</li><li>1 mulher morta por feminicidio a cada 6h</li><li>Trabalho domestico majoritariamente feminino</li><li>Teto de vidro em cargos executivos</li></ul></div>
-    <div class="card-dark"><h4>No Mundo</h4><ul><li>Apenas 26 paises com paridade de genero</li><li>650 mi de mulheres casadas antes dos 18 anos</li><li>Afganistao proibe educacao feminina</li><li>EUA: 82 cents para cada $1 de homens</li><li>Africa: maior brecha em saude feminina</li></ul></div>
+  <!-- Slide 14: Créditos -->
+  <div class="slide" id="s14">
+    <div style="text-align:center">
+      <div class="credits-t">Desigualdade de Gênero</div>
+      <div class="credits-s">2025 · Documentário</div>
+      <div class="divider"></div>
+      <div class="credits-sec">
+        <h4>Direção e roteiro</h4>
+        <div class="credits-name">FEITO POR FERNANDO, EMANUEL, DAVI</div>
+      </div>
+      <div class="credits-sec">
+        <h4>Produção</h4>
+        <div class="credits-name">GRUPO DO 2º ANO B</div>
+      </div>
+      <div class="credits-sec">
+        <h4>Fontes</h4>
+        <div class="credits-name" style="font-size:12px;color:#777">ONU Mulheres · WEF 2024 · IBGE · McKinsey</div>
+      </div>
+      <div class="divider"></div>
+      <div style="font-size:11px;color:#444;letter-spacing:1px">NETFIX ORIGINALS · 2025</div>
+    </div>
   </div>
-</div>
 
-<!-- Slide 8: Dados -->
-<div class="slide" id="s8" style="align-items:flex-start;justify-content:flex-start;padding-top:36px">
-  <div><span class="ep-badge">EP. 4</span><span class="ep-cat">DADOS E ESTATISTICAS</span></div>
-  <div class="doc-title">Os numeros que chocam</div>
-  <div class="doc-sub">Fonte: ONU Mulheres, FMI, WEF 2024</div>
-  <div class="grid2">
-    <div class="stat"><div class="stat-n">68%</div><div class="stat-l">da lacuna global de genero ainda precisa ser fechada (WEF 2024)</div></div>
-    <div class="stat"><div class="stat-n">131</div><div class="stat-l">anos estimados para alcançar igualdade no ritmo atual</div></div>
-    <div class="stat"><div class="stat-n">2,7x</div><div class="stat-l">mais tempo que mulheres dedicam a trabalho nao remunerado</div></div>
-    <div class="stat"><div class="stat-n">R$760bi</div><div class="stat-l">ganho potencial ao Brasil com igualdade de genero no trabalho</div></div>
+  <div class="nav">
+    <button class="nav-btn" id="btn-prev" onclick="prev()" disabled>← VOLTAR</button>
+    <div class="dots" id="dots"></div>
+    <button class="nav-btn" id="btn-next" onclick="next()">AVANÇAR →</button>
   </div>
-</div>
 
-<!-- Slide 9: Causas -->
-<div class="slide" id="s9" style="align-items:flex-start;justify-content:flex-start;padding-top:36px">
-  <div><span class="ep-badge">EP. 5</span><span class="ep-cat">CAUSAS</span></div>
-  <div class="doc-title">Raizes do problema</div>
-  <div class="doc-sub">Por que a desigualdade persiste?</div>
-  <div class="grid2">
-    <div class="card-dark"><h4>Estruturais</h4><ul><li>Patriarcado historico e cultural</li><li>Leis e sistemas legais desiguais</li><li>Acesso desigual a educacao</li><li>Trabalho domestico nao valorizado</li></ul></div>
-    <div class="card-dark"><h4>Culturais</h4><ul><li>Estereotipos de genero desde a infancia</li><li>Representaçao midiatica distorcida</li><li>Normas religiosas restritivas</li><li>Socializacao diferenciada</li></ul></div>
-    <div class="card-dark"><h4>Economicas</h4><ul><li>Segregaçao ocupacional por genero</li><li>Penalidade pela maternidade</li><li>Falta de licenca parental igualitaria</li></ul></div>
-    <div class="card-dark"><h4>Politicas</h4><ul><li>Sub-representaçao feminina no poder</li><li>Falta de cotas e politicas afirmativas</li><li>Violencia politica contra mulheres</li></ul></div>
-  </div>
-</div>
-
-<!-- Slide 10: Consequencias -->
-<div class="slide" id="s10" style="align-items:flex-start;justify-content:flex-start;padding-top:36px">
-  <div><span class="ep-badge">EP. 6</span><span class="ep-cat">CONSEQUENCIAS</span></div>
-  <div class="doc-title">O custo da desigualdade</div>
-  <div class="doc-sub">Quando a metade nao tem voz, todos perdem</div>
-  <div class="grid2">
-    <div class="card-dark full" style="border-left:3px solid #E50914;border-radius:0 4px 4px 0"><h4>Para as mulheres</h4><p>Menor autonomia financeira, maior vulnerabilidade a violencia domestica, saude mental prejudicada, menos acesso a cuidados de saude e carreiras de prestigio.</p></div>
-    <div class="card-dark"><h4>Para a economia</h4><ul><li>PIB global 26% menor (McKinsey)</li><li>Desperdicio de capital humano</li><li>Menor inovaçao e diversidade</li><li>Pobreza concentrada em mulheres</li></ul></div>
-    <div class="card-dark"><h4>Para a sociedade</h4><ul><li>Democracias menos representativas</li><li>Politicas publicas menos inclusivas</li><li>Ciclos intergeracionais de pobreza</li><li>Violencia como norma naturalizada</li></ul></div>
-  </div>
-</div>
-
-<!-- Slide 11: Solucoes -->
-<div class="slide" id="s11" style="align-items:flex-start;justify-content:flex-start;padding-top:36px">
-  <div><span class="ep-badge">EP. 7</span><span class="ep-cat">SOLUCOES</span></div>
-  <div class="doc-title">O que podemos fazer?</div>
-  <div class="doc-sub">Caminhos reais para a mudanca</div>
-  <div class="grid2">
-    <div class="card-dark"><h4>Politicas publicas</h4><ul><li>Cotas de genero na politica -> garantem participação feminina e aceleram a igualdade.</li><li>Licença parental igualitaria -> divide responsabilidades e reduz preconceito no trabalho.</li><li>Lei de igualdade salarial -> divide responsabilidades e reduz preconceito no trabalho.</li><li>Creches universais publicas -> assegura pagamento igual por trabalho igual.</li></ul></div>
-    <div class="card-dark"><h4>Educaçao</h4><ul><li>Educaçao nao sexista na infancia -> forma crianças com visão de igualdade desde cedo.</li><li>Combate a estereotipos na escola -> forma crianças com visão de igualdade desde cedo.</li><li>Educaçao sexual e de genero -> promove respeito e previne abusos.</li></ul></div>
-    <div class="card-dark"><h4>Cultura e midia</h4><ul><li>Representatividade feminina na midia -> inspira e normaliza mulheres no poder.</li><li>Combate a violencia simbolica -> reduz preconceitos e estereótipos.</li><li>Campanhas de conscientizacao -> conscientizam e incentivam mudança social.</li></ul></div>
-    <div class="card-dark"><h4>Individual e coletivo</h4><ul><li>Divisao igualitaria das tarefas domesticas -> reduz desigualdade dentro de casa.</li><li>Apoio a negocios liderados por mulheres -> fortalece autonomia econômica.</li><li>Voto em candidatas e politicas igualitarias -> fortalece autonomia econômica.</li></ul></div>
-  </div>
-</div>
-  
-<!-- Slide 12: Video -->
-<div class="slide" id="s12" style="align-items:center;justify-content:center;flex-direction:column;gap:16px">
-  <iframe width="80%" height="400px" src="https://www.youtube.com/embed/xSyXSiEyics" frameborder="0" allowfullscreen style="border-radius:8px;border:2px solid #E50914"></iframe>
-  <p style="font-size:12px;color:#aaa;max-width:80%;text-align:center;line-height:1.7">
-    No vídeo, as desigualdades de gênero no mercado de trabalho brasileiro são comentados por <span style="color:#E50914">Jurema Werneck</span> (Diretora da ONG Criola), <span style="color:#E50914">Helena Hirata</span> (Especialista em sociologia do trabalho e do gênero e professora da Universidade de Paris VIII) e <span style="color:#E50914">Hildete Pereira de Melo</span> (Editora da Revista GÊNERO e Coordenadora do Núcleo Transdisciplinar de Estudos de Gênero da UFF).
-  </p>
-</div>
-  
-<!-- Slide 13: Conclusao -->
-<div class="slide" id="s13">
-  <div style="text-align:center;max-width:520px">
-    <div style="font-size:11px;color:#E50914;letter-spacing:2px;margin-bottom:14px">CONCLUSÃO</div>
-    <div style="font-size:34px;font-weight:800;line-height:1.2;margin-bottom:16px">"Um mundo igualitário<br>nao e utopia —<br>e escolha."</div>
-    <div style="font-size:14px;color:#aaa;line-height:1.7;margin-bottom:24px">A desigualdade de genero nao é inevitavel. É o resultado de sistemas, decisoes e omissoes. Muda-la exige consciencia, politicas e açao coletiva.</div>
-    <div style="display:flex;justify-content:center;gap:20px;font-size:12px;color:#666"><span>ODS 5 — ONU</span><span>|</span><span>Igualdade ate 2030</span><span>|</span><span>Voce faz parte</span></div>
-  </div>
-</div>
-
-<!-- Slide 14: Creditos -->
-<div class="slide" id="s14">
-  <div style="text-align:center">
-    <div class="credits-t">Desigualdade de Genero</div>
-    <div class="credits-s">2025 · Documentario</div>
-    <div class="divider"></div>
-    <div class="credits-sec"><h4>Direçao e roteiro</h4><div class="credits-name">FEITO POR FERNANDO,EMANUEL,DAVI</div></div>
-    <div class="credits-sec"><h4>Produçao</h4><div class="credits-name">GRUPO do 2ANOB</div></div>
-    <div class="credits-sec"><h4>Fontes</h4><div class="credits-name" style="font-size:12px;color:#777">ONU Mulheres · WEF 2024 · IBGE · McKinsey</div></div>
-    <div class="divider"></div>
-    <div style="font-size:11px;color:#444;letter-spacing:1px">NETFIX ORIGINALS · 2025</div>
-  </div>
-</div>
-
-<div class="nav">
-  <button class="nav-btn" id="btn-prev" onclick="prev()" disabled>← VOLTAR</button>
-  <div class="dots" id="dots"></div>
-  <button class="nav-btn" id="btn-next" onclick="next()">AVANÇAR →</button>
-</div>
-
-<script src="script.js"></script>
+  <script src="script.js"></script>
 </body>
+
 </html>
